@@ -1,6 +1,22 @@
-const GsapFrom = () => {
-  // TODO: Implement the gsap.from() method
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
+const GsapFrom = () => {
+  useGSAP(() => {
+    // .from - similar to `to()`, but this animates from a
+    //         NEW state to their CURRENT state.
+
+    // Animation is translateX on 250px and #191919 to its NORMAL position and color.
+    gsap.from("#green-box", {
+      x: 250,
+      repeat: -1,
+      yoyo: true,
+      rotation: 180,
+      duration: 2,
+      ease: "steps(8)",
+      backgroundColor: "#191919",
+    });
+  }, []);
   return (
     <main>
       <h1>GsapFrom</h1>

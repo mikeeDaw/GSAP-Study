@@ -1,5 +1,46 @@
+// Register the plugin first.
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/all";
+import { useRef } from "react";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const GsapScrollTrigger = () => {
-  // TODO: Implement the gsap scroll trigger
+  // "Scroll Trigger" is a property.
+  //   - a plugin. Register it first.
+  //   - allows to create animations that are triggered by the scroll position
+  //     of the page.
+  //   - for more complex scrollTriggers, use the object. (See docs.)
+  //   Some Concepts: Scrub, pin, and snap.
+
+  // Create a Ref for the container of the boxes.
+  const scrollRef = useRef();
+
+  useGSAP(() => {
+    // Way to convert the children elements into an array.
+    const boxes = gsap.utils.toArray(scrollRef.current.children);
+
+    boxes.forEach((box, idx, list) => {
+      gsap.to(box, {
+        x: 500,
+        scrollTrigger: {
+          // Means the 'trigger' is the next child on the container. If last child,
+          // the trigger is itself.
+          trigger: list[list.length === idx + 1 ? idx : idx + 1],
+          // "(The target) (Viewport)"
+          start: "bottom 80%",
+          end: "top center",
+          toggleActions: "play pause resume reset",
+          // Adds markers on the side.
+          markers: true,
+          // scrub: true,
+        },
+        duration: 2,
+        ease: "circ.inOut",
+      });
+    });
+  }, []);
 
   return (
     <main>
@@ -51,14 +92,18 @@ const GsapScrollTrigger = () => {
         </svg>
       </div>
 
-      <div className="mt-20 w-full h-screen">
+      <div className="mt-20 w-full h-[150vh] pb-40" ref={scrollRef}>
         <div
           id="scroll-pink"
           className="scroll-box w-20 h-20 rounded-lg bg-pink-500"
         />
         <div
           id="scroll-orange"
-          className="scroll-box w-20 h-20 rounded-lg bg-orange-500"
+          className="scroll-box w-20 h-20 rounded-lg bg-orange-500 mt-36"
+        />
+        <div
+          id="scroll-green"
+          className="scroll-box w-20 h-20 rounded-lg bg-green-500 mt-36"
         />
       </div>
     </main>

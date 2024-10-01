@@ -1,5 +1,47 @@
+import { useGSAP } from "@gsap/react";
+import { TextPlugin } from "gsap/all";
+import gsap from "gsap";
+
+gsap.registerPlugin(TextPlugin);
+
 const GsapText = () => {
-  // TODO: Implement gsap text animation
+  // "text" is a property.
+  //   - a plugin. Register it first.
+
+  useGSAP(() => {
+    gsap.to("#text", {
+      ease: "power1.in",
+      opacity: 1,
+      y: 0,
+    });
+
+    gsap.fromTo(
+      ".para",
+      {
+        opacity: 0,
+        y: 20,
+      },
+      {
+        opacity: 1,
+        y: 0,
+        delay: 1,
+        stagger: 0.2,
+      }
+    );
+
+    gsap.to("#socks", {
+      text: {
+        value: "Lemme see those socks",
+        delimiter: "",
+        newClass: "text-green-500 text-xl font-bol",
+        speed: 0.6,
+        padSpace: true,
+      },
+      ease: "none",
+      delay: 1,
+      duration: 3,
+    });
+  }, []);
 
   return (
     <main>
@@ -35,6 +77,12 @@ const GsapText = () => {
         </a>{" "}
         plugin.
       </p>
+
+      <div className="h-[40vh] text-[#F1F1F1] my-10 flex flex-col">
+        <h3 id="socks" className="text-xl font-bold">
+          Gimme your green socks
+        </h3>
+      </div>
     </main>
   );
 };

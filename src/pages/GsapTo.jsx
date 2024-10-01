@@ -1,5 +1,27 @@
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+
 const GsapTo = () => {
-  // TODO: Implement the gsap.to() method
+  // This hook looks and behaves like `useEffect`.
+  // Also has a dependency array that defines when it has to run.
+  useGSAP(() => {
+    // `.to()` - animates element from their CURRENT state to a NEW state.
+    // Params: • Target Element
+    //         • variables for animation (See cheatsheet for more.)
+    // 'repeat: -1' means repeat the animation infinitely.
+    // 'yoyo: true' means reverse animation on every cycle. Ex: 'repeat: 4'. 3 normal, 2 reversed. (initial animation is not counted on the number on 'repeat')
+
+    // Animation is Normal, then translateX to 250px and change color.
+    gsap.to("#blue-box", {
+      x: 250,
+      repeat: -1,
+      yoyo: true,
+      rotation: 180,
+      duration: 2,
+      ease: "steps(8)",
+      backgroundColor: "#191919",
+    });
+  }, []);
 
   return (
     <main>

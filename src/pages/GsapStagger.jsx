@@ -1,6 +1,37 @@
-const GsapStagger = () => {
-  // TODO: Implement the gsap.stagger() method
+import gsap from "gsap";
 
+const GsapStagger = () => {
+  // 'stagger' is a property.
+  //   - If the tween has multiple targets, you can add a delay between each
+  //     start of the animation on individual targets.
+  // For more complex staggers, use the "Stagger Object". (See more on docs)
+
+  const staggerAnim = (idx) => {
+    console.log(idx);
+    gsap.to(".stagger-box", {
+      y: 100,
+      scaleY: 0.2,
+      opacity: 0,
+      skewX: 50,
+      duration: 1.5,
+      ease: "bounce",
+      stagger: {
+        each: 0.1,
+        grid: [3, 7],
+        from: idx,
+      },
+    });
+
+    gsap.to(".stagger-box", {
+      y: 0,
+      opacity: 1,
+      scaleY: 1,
+      skewX: 0,
+      delay: 2.5,
+    });
+  };
+
+  let boxes = 0;
   return (
     <main>
       <h1>GsapStagger</h1>
@@ -30,16 +61,22 @@ const GsapStagger = () => {
         feature.
       </p>
 
-      <div className="mt-20">
-        <div className="flex gap-5">
-          <div className="w-20 h-20 bg-indigo-200 rounded-lg stagger-box" />
-          <div className="w-20 h-20 bg-indigo-300 rounded-lg stagger-box" />
-          <div className="w-20 h-20 bg-indigo-400 rounded-lg stagger-box" />
-          <div className="w-20 h-20 bg-indigo-500 rounded-lg stagger-box" />
-          <div className="w-20 h-20 bg-indigo-600 rounded-lg stagger-box" />
-          <div className="w-20 h-20 bg-indigo-700 rounded-lg stagger-box" />
-          <div className="w-20 h-20 bg-indigo-800 rounded-lg stagger-box" />
-        </div>
+      <div className="flex flex-col gap-5 mt-20">
+        {Array.from({ length: 3 }).map((_, idx) => {
+          return (
+            <div className="flex gap-5" key={`X${idx}`}>
+              {Array.from({ length: 7 }).map((_, idx2) => (
+                <div
+                  key={`Y${idx2 + idx}`}
+                  className="w-20 h-20 bg-indigo-400 rounded-lg stagger-box"
+                  onClick={() => {
+                    staggerAnim(idx * 7 + idx2);
+                  }}
+                />
+              ))}
+            </div>
+          );
+        })}
       </div>
     </main>
   );

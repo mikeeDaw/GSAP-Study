@@ -1,6 +1,33 @@
-const GsapFromTo = () => {
-  // TODO: Implement the gsap.fromTo() method
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
+const GsapFromTo = () => {
+  useGSAP(() => {
+    // .fromTo - Animates a NEW state  to a NEW state.
+    // Params: • Target element
+    //         • "from" object
+    //         • "to" object
+
+    // the 'yoyo','repeat', or any special property only works on the "to" object.
+    gsap.fromTo(
+      "#red-box",
+      {
+        x: 0,
+        borderRadius: 0,
+        rotation: 0,
+      },
+      {
+        x: 250,
+        yoyo: true,
+        repeat: -1,
+        borderRadius: "100%",
+        rotation: 180,
+        duration: 2,
+        ease: "power1.in",
+        backgroundColor: "#191919",
+      }
+    );
+  }, []);
   return (
     <main>
       <h1>GsapFromTo</h1>
